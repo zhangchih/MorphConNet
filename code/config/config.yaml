@@ -1,0 +1,35 @@
+network:
+  name: pointnetv2
+
+  # Specify a folder containing a pre-trained model to fine-tune. If training from scratch, pass None.
+  fine_tune_from: None
+
+  projection_head:
+    mlp_hidden_size: 512
+    projection_size: 128
+
+data_transforms:
+  s: 1
+  input_shape: (96,96,3)
+
+trainer:
+  batch_size: 5
+  m: 0.996 # momentum update
+  checkpoint_interval: 5000
+  max_epochs: 50
+  num_workers: 8
+  queue_length: 100
+  feature_dim: 128
+  epoch_queue_starts: 1
+  alpha: 0.2
+  freq_update_cluster: 1
+
+testing:
+  batch_size: 1
+  num_workers: 4
+
+optimizer:
+  params:
+    lr: 0.0003
+    weight_decay: 0.0004
+    
