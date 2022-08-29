@@ -1,5 +1,6 @@
 # MorphConNet
-
+Chi Zhang, Qihua Chen, Xuejin Chen. Self-Supervised Learning of Morphological Representation for 3D EM Segments with Cluster-Instance Correlations.
+In MICCAI 2022
 ## Dataset: FAFB-CellSeg
 ```
 cd fafb-cellseg
@@ -9,13 +10,35 @@ The segment ids of corresponding classes are in glias/neurites/soma.txt. You can
 
 The point cloud data are in the folders, where each line records the coordinates of a point.
 
-/*Note that we expanded the number of glia in the dataset to 331.
+/*Note that we expanded the number of glia in the dataset to 331 (in the paper we have 110).  
+Feature embedding space of MorphConNet on FAFB-CellSeg.
+<div align="center"><img src="https://github.com/zhangchih/MorphConNet/blob/main/feature_distribution.png"  width="400px" />   
 
-Visualization of the glia segments in the fly brain:
+The glia segments we annotated in the fly brain:
+<div align="center"><img src="https://github.com/zhangchih/MorphConNet/blob/main/glia_331.png"  width="800px" />   
 
+<div align="left">  
 
 ## Test the pre-trained self-supervised model
-Finetune: 
+```
+uzip ./code/pretrained/model_sslcontrast.pth.zip
+```
+Finetune the model with the classification task of fafb-CellSeg: [finetune_eval.ipynb](https://github.com/zhangchih/MorphConNet/blob/main/code/eval/finetune_eval.ipynb)   
+Linear classification and t-sne visualization: [linear_feature_eval.ipynb](https://github.com/zhangchih/MorphConNet/blob/main/code/eval/linear_feature_eval.ipynb)
 
-Linear: 
-
+## Pretrain the model with your own dataset
+Format your dataset as:  
+```
+your_dataset_forlder  
+├── neuron_dataset_shape_names.txt    # contains the class_name
+├── neuron_dataset_test.txt   # contains the file names in folder class_name
+├── class_name  
+    ├── your_point_cloud_data1.txt  
+    ├── your_point_cloud_data2.txt
+    ├── ...
+```
+Modify the dataset path in ./main.py  
+Config the training parameters in ./config/config.yaml
+```
+python main.py
+```
